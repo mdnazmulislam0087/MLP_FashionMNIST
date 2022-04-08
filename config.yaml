@@ -1,26 +1,26 @@
 params:
-  VALIDATION_DATASIZE = 5000
-  EPOCHS = 30
-  BATCH_SIZE = 32
-  NUM_CLASSES = 10
-  LOSS_FUNCTION = tf.losses.sparse_categorical_crossentropy
-  OPTIMIZER = tf.keras.optimizers.SGD(learning_rate=0.01)
-  METRICS = tf.keras.metrics.sparse_categorical_accuracy
-  PATIENCE = 5
-  RESTORE_BEST_WEIGHTS =True
+  VALIDATION_DATASIZE : 5000
+  EPOCHS : 30
+  BATCH_SIZE : 32
+  NUM_CLASSES : 10
+  LOSS_FUNCTION : tf.losses.sparse_categorical_crossentropy
+  OPTIMIZER : tf.keras.optimizers.SGD(learning_rate:0.01)
+  METRICS : tf.keras.metrics.sparse_categorical_accuracy
+  PATIENCE : 5
+  RESTORE_BEST_WEIGHTS : True
 
 artifacts: 
-  ARTIFACTS_DIR= artifacts
-  MODEL_DIR = model
-  PLOTS_DIR = plots
-  MODEL_NAME = model.h5
-  CHECKPOINTS_DIR = checkpoints
+  ARTIFACTS_DIR: artifacts
+  MODEL_DIR : model
+  PLOTS_DIR : plots
+  MODEL_NAME : model.h5
+  CHECKPOINTS_DIR : checkpoints
 
 logs: 
-  LOGS_DIR=logs
-  GENERAL_LOGS_DIR = general_logs
-  TENSORBOARD_ROOT_LOG_DIR= tensorboard_logs
-  
+  LOGS_DIR : logs
+  GENERAL_LOGS_DIR : general_logs
+  TENSORBOARD_ROOT_LOG_DIR: tensorboard_logs
+
 
 
   
