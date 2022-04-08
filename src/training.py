@@ -1,9 +1,11 @@
+
 from src.utils.common import read_config
 from src.utils.logger import setup_logger
 from src.utils.logger import get_timestamp
 from src.utils.data_mgmt import get_data
+from src.utils.model import create_model
 
-
+import tensorflow as tf
 import argparse
 import logging
 
@@ -25,11 +27,38 @@ def training(config_path):
     logging.info(">>>>>>>>>>>Data Loading started<<<<<<<<<<<<<<<<<<<")
     validation_datasize= config["params"]["VALIDATION_DATASIZE"]
     try:
-        (X_train, y_train), (X_valid,Y_valid),(X_test,y_test)= get_data(validation_datasize=validation_datasize)
+        (X_train, y_train), (X_valid, y_valid),(X_test, y_test)= get_data(validation_datasize=validation_datasize)
     except Exception as e:
         logging.exception(e)
         raise e
     logging.info(">>>>>>>Data Loading finished<<<<<<<<<<<<<<<<<<")  
+    
+    # Creating and comiling model 
+    logging.info(">>>>>>>Creating and Compiling model started <<<<<<<<<<<<<<<<<")
+    LOSS_FUNCTION=config["params"]["LOSS_FUNCTION"]
+    OPTIMIZER=config["params"]["OPTIMIZER"]
+    METRICS=config["params"]["METRICS"]    
+    try:
+        model_clf=create_model(LOSS_FUNCTION=LOSS_FUNCTION,OPTIMIZER=OPTIMIZER,METRICS=METRICS)
+    except Exception as e:
+        logging.exception(e)
+        raise e
+    logging.info(">>>>>>>Creating and Compiling model finished <<<<<<<<<<<<<<<<<")
+    
+    # TRAINING MODELS
+    EPOCHS=config["params"]["EPOCHS"]
+    VALIDATION_SET=(X_valid, y_valid)
+    try:
+        logging.info(">>>>>>>Model training started <<<<<<<<<<<<<<<<<")
+        history= model_clf.fit(x=X_train,y=y_train,epochs=EPOCHS,validation_data=VALIDATION_SET)
+        logging.info(">>>>>>>Model training finished <<<<<<<<<<<<<<<<<")
+    except Exception as e:
+        logging.exception(e)
+        raise e
+    
+    
+    
+    
     
 
 
