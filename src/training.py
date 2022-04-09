@@ -5,8 +5,10 @@ from src.utils.logger import get_timestamp
 from src.utils.data_mgmt import get_data
 from src.utils.model import create_model
 from src.utils.model import save_model
+from src.utils.model import save_plot
 
 import tensorflow as tf
+import pandas as pd
 import argparse
 import logging
 import os
@@ -72,7 +74,17 @@ def training(config_path):
     logging.info(f">>> Model saved Location: {model_dir_path}>>>>")
     
     
-    
+    #save the plot
+    logging.info(">>> Saving plots >>>>")
+    plots_dir = config["artifacts"]["PLOTS_DIR"]
+    plots_dir_path= os.path.join(artifacts_dir, plots_dir)
+    os.makedirs(plots_dir_path, exist_ok=True)
+
+    plots_name=config["artifacts"]["plots_name"]
+    df= pd.DataFrame(history.history)
+    save_plot(df,plots_name,plots_dir_path)
+    logging.info(f">>> Plot saving done at {plots_dir_path} >>>>\n\n")
+ 
 
 
 

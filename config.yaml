@@ -19,6 +19,7 @@ artifacts:
   PLOTS_DIR : plots
   MODEL_NAME : model.h5
   CHECKPOINTS_DIR : checkpoints
+  plots_name : accuracy-lossCurve
 
 logs: 
   LOGS_DIR : logs
