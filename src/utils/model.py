@@ -1,5 +1,6 @@
 import tensorflow as tf
-
+import time
+import os
 
 
 
@@ -19,4 +20,17 @@ def create_model(LOSS_FUNCTION,OPTIMIZER,METRICS):
                 metrics=METRICS)
     return model_clf
 
-    
+
+# To save model
+
+def get_unique_filename(name):  #<< best it is
+    timestamp = time.asctime().replace(" ", "_").replace(":", "_")
+    unique_name = f"{timestamp}_{name}"
+    return unique_name
+
+#save model
+def save_model(model, model_name, model_dir):
+    unique_filename = get_unique_filename(model_name)
+    path_to_model = os.path.join(model_dir, unique_filename)
+    model.save(path_to_model)
+

@@ -4,11 +4,12 @@ from src.utils.logger import setup_logger
 from src.utils.logger import get_timestamp
 from src.utils.data_mgmt import get_data
 from src.utils.model import create_model
+from src.utils.model import save_model
 
 import tensorflow as tf
 import argparse
 import logging
-
+import os
 
 def logger_config(config_path):
     config=read_config(config_path)
@@ -57,6 +58,18 @@ def training(config_path):
         raise e
     
     
+    # save the model at
+    logging.info(">>> Saving models >>>>")
+    artifacts_dir = config["artifacts"]["ARTIFACTS_DIR"]
+    model_dir = config["artifacts"]["MODEL_DIR"]
+
+    model_dir_path = os.path.join(artifacts_dir, model_dir)
+    os.makedirs(model_dir_path, exist_ok=True)
+
+    model_name=config["artifacts"]["MODEL_NAME"]
+    save_model(model_clf, model_name , model_dir= model_dir_path )
+
+    logging.info(f">>> Model saved Location: {model_dir_path}>>>>")
     
     
     
