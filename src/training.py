@@ -6,6 +6,7 @@ from src.utils.data_mgmt import get_data
 from src.utils.model import create_model
 from src.utils.model import save_model
 from src.utils.model import save_plot
+from src.utils.callbacks import get_callbacks
 
 import tensorflow as tf
 import pandas as pd
@@ -51,9 +52,11 @@ def training(config_path):
     # TRAINING MODELS
     EPOCHS=config["params"]["EPOCHS"]
     VALIDATION_SET=(X_valid, y_valid)
+    CALLBACK_LIST = get_callbacks(config, X_train)
+    
     try:
         logging.info(">>>>>>>Model training started <<<<<<<<<<<<<<<<<")
-        history= model_clf.fit(x=X_train,y=y_train,epochs=EPOCHS,validation_data=VALIDATION_SET)
+        history= model_clf.fit(x=X_train,y=y_train,epochs=EPOCHS,validation_data=VALIDATION_SET,callbacks=CALLBACK_LIST)
         logging.info(">>>>>>>Model training finished <<<<<<<<<<<<<<<<<")
     except Exception as e:
         logging.exception(e)
